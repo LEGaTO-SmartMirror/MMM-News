@@ -402,6 +402,8 @@ Module.register("MMM-News", {
 
     var news = document.getElementById("NEWS")
 
+    console.log({ articleName: article.title, articleCategory : article.query.category, source: article.source.name})
+    this.sendNotification('NEWS_ARTICLE', { articleName: article.title, articleCategory : article.query.category, source: article.source.name})
 
     var newsContent = document.getElementById("NEWS_CONTENT")
     news.classList.add("hideArticle")
