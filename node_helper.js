@@ -140,7 +140,7 @@ module.exports = NodeHelper.create({
       qs = Object.assign({}, qs, {"pageSize":this.config.items})
       qs = Object.assign({}, qs, {"apiKey":this.config.apiKey})
       var qp = querystring.stringify(qs)
-      this.pool.push({"url":url + qp, "query":q})
+      this.pool.push({"url":url + qp, "query":q, "category":q["category"]})
     }
 
     this.queryItems = this.pool.length
@@ -238,6 +238,7 @@ module.exports = NodeHelper.create({
       var req = this.pool[i]
       url = req.url
       query = req.query
+      category = req.category
       getArticles(url, query, this.config, this.articles)
     }
     var timer = setTimeout(()=>{
