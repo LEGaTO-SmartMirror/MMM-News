@@ -203,6 +203,7 @@ Module.register("MMM-News", {
     if (noti == "UPDATE") {
       if (payload.length > 0) {
         this.articles = payload
+        this.sendNotification("NEWS_UPDATED", new Date())
         if (this.firstUpdate == 0) {
           this.firstUpdate = 1
           this.index = 0
@@ -431,5 +432,6 @@ Module.register("MMM-News", {
       }
       this.draw()
     }, this.config.drawInterval)
+    this.sendNotification("NEWS_UPDATED", new Date())
   },
 })
