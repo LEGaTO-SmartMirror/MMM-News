@@ -217,7 +217,6 @@ module.exports = NodeHelper.create({
         var result = cb (ret, cfg, query)
         result.forEach(function(element){
           element.title = element.query.category.charAt(0).toUpperCase() + element.query.category.substring(1) + " - " + element.title
-          console.log(element)
         })
         if (result.length > 0) {
           this.articles = this.articles.concat(result)
