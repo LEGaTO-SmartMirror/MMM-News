@@ -103,11 +103,13 @@ Module.register("MMM-News", {
   },
 
   start: function() {
+    Log.log("self start function", "INIT")
     this.sendSocketNotification("INIT", this.config)
     this.articles = []
     this.firstUpdate = 0
     this.timer = null
     this.index = 0
+    this.hidden = undefined
     this.template = ""
   },
 
@@ -203,6 +205,7 @@ Module.register("MMM-News", {
     if (noti == "UPDATE") {
       if (payload.length > 0) {
         this.articles = payload
+        Log.log("NEWS_UPDATED")
         this.sendNotification("NEWS_UPDATED", new Date())
         if (this.firstUpdate == 0) {
           this.firstUpdate = 1
@@ -426,12 +429,20 @@ Module.register("MMM-News", {
 
 
     this.timer = setTimeout(()=>{
-      this.index++
-      if (this.index >= this.articles.length) {
-        this.index = 0
+      MM.getModules().withClass("MMM-News").enumerate(function(module) {
+        this.hidden = module.hidden
+      })
+      if(this.hidden){
+        this.index = Math.floor(Math.random() * this.articles.length)
+      } else {
+        this.index++
+        if (this.index >= this.articles.length) {
+          this.index = 0
+        }
       }
       this.draw()
     }, this.config.drawInterval)
+    Log.log("NEWS_UPDATED")
     this.sendNotification("NEWS_UPDATED", new Date())
-  },
+  }
 })
